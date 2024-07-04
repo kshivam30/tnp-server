@@ -4,6 +4,8 @@ const cors = require('cors'); // Import the cors package
 const registerRoute = require('./routes/register');
 const loginRoute = require('./routes/login');
 const jobsRoute = require('./routes/jobs');
+const getJobsRoute = require('./routes/getJobs');
+
 
 const app = express();
 const port = process.env.PORT || 3001;
@@ -16,6 +18,7 @@ app.use(bodyParser.json()); // Parse JSON bodies
 app.use('/register', registerRoute);
 app.use('/login', loginRoute);
 app.use('/jobs', jobsRoute);
+app.use('/getJobs', getJobsRoute);
 
 // Start server
 app.listen(port, () => {
