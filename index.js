@@ -13,8 +13,14 @@ const port = process.env.PORT || 3001;
 require('dotenv').config();
 
 // Middleware
-app.use(cors()); // Use the cors middleware
-app.use(bodyParser.json()); // Parse JSON bodies
+const corsOptions = {
+    origin: process.env.ALLOWED_ORIGINS ? process.env.ALLOWED_ORIGINS.split(',') : '*',
+    methods: 'GET,POST,PUT,DELETE',
+    allowedHeaders: 'Content-Type,Authorization',
+    credentials: true,
+  };
+  app.use(cors(corsOptions));
+  app.use(bodyParser.json()); // Parse JSON bodies
 
 // Routes
 app.use('/register', registerRoute);
