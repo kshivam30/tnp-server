@@ -5,11 +5,11 @@ const router = express.Router();
 
 // POST /jobs
 router.post('/', (req, res) => {
-    const { companyName, CTC, DOA, eligibleAbove, Applied, logo } = req.body;
-    console.log('Received job post request with:', companyName, CTC, DOA, eligibleAbove, Applied, logo);
+    const { companyName, CTC, DOA, eligibleAbove, Applied, logo, jobTitle, jobType } = req.body;
+    console.log('Received job post request with:', companyName, CTC, DOA, eligibleAbove, Applied, logo, jobTitle, jobType);
 
     // Validate required fields
-    if (!companyName || !CTC || !DOA || !eligibleAbove || !Applied || !logo) {
+    if (!companyName || !CTC || !DOA || !eligibleAbove || !Applied || !logo || !jobTitle || !jobType) {
         console.log('Missing required fields in request body');
         return res.status(400).json({ message: 'All fields are required' });
     }
@@ -38,7 +38,9 @@ router.post('/', (req, res) => {
             DOA,
             eligibleAbove,
             Applied,
-            logo
+            logo,
+            jobTitle,
+            jobType
         };
 
         // Add new job to array
