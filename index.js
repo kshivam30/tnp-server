@@ -6,6 +6,7 @@ const registerRoute = require('./routes/register');
 const loginRoute = require('./routes/login');
 const jobsRoute = require('./routes/jobs');
 const getJobsRoute = require('./routes/getJobs');
+const allowCors = require('./allowCors'); // Adjust the path if necessary
 
 const app = express();
 const port = process.env.PORT || 3001;
@@ -13,14 +14,8 @@ const port = process.env.PORT || 3001;
 require('dotenv').config();
 
 // Middleware
-const corsOptions = {
-    origin: process.env.ALLOWED_ORIGINS ? process.env.ALLOWED_ORIGINS.split(',') : '*',
-    methods: 'GET,POST,PUT,DELETE',
-    allowedHeaders: 'Content-Type,Authorization',
-    credentials: true,
-  };
-  app.use(cors(corsOptions));
-  app.use(bodyParser.json()); // Parse JSON bodies
+app.use(allowCors); // Apply allowCors middleware globally
+app.use(bodyParser.json()); // Parse JSON bodies
 
 // Routes
 app.use('/register', registerRoute);
