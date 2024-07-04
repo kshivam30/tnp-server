@@ -1,10 +1,9 @@
 const express = require('express');
-const fs = require('fs');
-const path = require('path');
 const router = express.Router();
+const Job = require('../models/jobs'); 
 
 // POST /jobs
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
     const { companyName, CTC, DOA, eligibleAbove, Applied, logo, jobTitle, jobType } = req.body;
     console.log('Received job post request with:', companyName, CTC, DOA, eligibleAbove, Applied, logo, jobTitle, jobType);
 
@@ -14,25 +13,9 @@ router.post('/', (req, res) => {
         return res.status(400).json({ message: 'All fields are required' });
     }
 
-    // Read data from jobs.json
-    fs.readFile(path.join(__dirname, '../db/jobs.json'), 'utf8', (err, data) => {
-        if (err && err.code !== 'ENOENT') {
-            console.error('Error reading jobs.json:', err);
-            return res.status(500).json({ message: 'Internal server error' });
-        }
-
-        let jobs = [];
-        if (data) {
-            try {
-                jobs = JSON.parse(data);
-            } catch (parseError) {
-                console.error('Error parsing jobs.json:', parseError);
-                return res.status(500).json({ message: 'Internal server error' });
-            }
-        }
-
-        // Construct new job object
-        const newJob = {
+    try {
+        // Create a new job
+        const newJob = new Job({
             companyName,
             CTC,
             DOA,
@@ -41,21 +24,17 @@ router.post('/', (req, res) => {
             logo,
             jobTitle,
             jobType
-        };
-
-        // Add new job to array
-        jobs.push(newJob);
-
-        // Write updated data back to jobs.json
-        fs.writeFile(path.join(__dirname, '../db/jobs.json'), JSON.stringify(jobs, null, 2), 'utf8', (writeErr) => {
-            if (writeErr) {
-                console.error('Error writing to jobs.json:', writeErr);
-                return res.status(500).json({ message: 'Internal server error' });
-            }
-            console.log('Job posted successfully:', companyName);
-            res.status(201).json({ message: 'Job posted successfully' });
         });
-    });
+
+        // Save the job to the database
+        await newJob.save();
+
+        console.log('Job posted successfully:', companyName);
+        res.status(201).json({ message: 'Job posted successfully' });
+    } catch (error) {
+        console.error('Error posting job:', error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
 });
 
 module.exports = router;
