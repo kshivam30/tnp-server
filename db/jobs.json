@@ -1,0 +1,18 @@
+[
+  {
+    "companyName": "Example Company",
+    "CTC": "10 LPA",
+    "DOA": "2024-07-06",
+    "eligibleAbove": "Bachelors",
+    "Applied": true,
+    "logo": "https://example.com/logo.png"
+  },
+  {
+    "companyName": "Example Company",
+    "CTC": "10 LPA",
+    "DOA": "2024-07-06",
+    "eligibleAbove": "7 CGPA",
+    "Applied": true,
+    "logo": "https://example.com/logo.png"
+  }
+]
