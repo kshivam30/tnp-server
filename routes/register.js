@@ -5,12 +5,13 @@ const router = express.Router();
 
 // POST /register
 router.post('/', (req, res) => {
-    const { username, password, role } = req.body;
-    console.log('Received register request with:', username, password, role);
+    const { username, password, role, email, registrationNumber } = req.body;
+    console.log('Received register request with:', username, password, role, email, registrationNumber);
 
-    if (!username || !password || !role) {
-        console.log('Missing username, password, or role in request body');
-        return res.status(400).json({ message: 'Username, password, and role are required' });
+    // Validate required fields
+    if (!username || !password || !role || !email || !registrationNumber) {
+        console.log('Missing username, password, role, email, or registrationNumber in request body');
+        return res.status(400).json({ message: 'Username, password, role, email, and registration number are required' });
     }
 
     // Read data from users.json
@@ -28,15 +29,15 @@ router.post('/', (req, res) => {
             return res.status(500).json({ message: 'Internal server error' });
         }
 
-        // Check if username already exists
-        const existingUser = users.find(user => user.username === username);
+        // Check if username or email already exists
+        const existingUser = users.find(user => user.username === username || user.email === email);
         if (existingUser) {
-            console.log('Username already exists:', username);
-            return res.status(409).json({ message: 'Username already exists' });
+            console.log('Username or email already exists:', username, email);
+            return res.status(409).json({ message: 'Username or email already exists' });
         }
 
         // Add new user to array
-        const newUser = { username, password, role };
+        const newUser = { username, password, role, email, registrationNumber };
         users.push(newUser);
 
         // Write updated data back to users.json

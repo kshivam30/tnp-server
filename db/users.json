@@ -1,17 +1,9 @@
 [
   {
-    "username": "user1235",
-    "password": "pass1234",
-    "role": "user"
-  },
-  {
     "username": "user1234",
     "password": "pass1234",
-    "role": "admin"
-  },
-  {
-    "username": "user1237",
-    "password": "pass1234",
-    "role": "user"
+    "role": "admin",
+    "email": "a@gmail.com",
+    "registrationNumber": "123abc"
   }
 ]
