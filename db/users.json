@@ -1,9 +1,9 @@
 [
   {
-    "username": "user1234",
-    "password": "pass1234",
-    "role": "admin",
-    "email": "a@gmail.com",
-    "registrationNumber": "123abc"
+    "email": "fakeperson@gmail.com",
+    "password": "12345678",
+    "role": "Student",
+    "name": "ddsvdsvdfvdfrffddfsd",
+    "registrationNumber": "43534534"
   }
 ]

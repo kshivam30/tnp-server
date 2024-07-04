@@ -5,13 +5,13 @@ const router = express.Router();
 
 // POST /register
 router.post('/', (req, res) => {
-    const { username, password, role, email, registrationNumber } = req.body;
-    console.log('Received register request with:', username, password, role, email, registrationNumber);
+    const { email, password, role, name, registrationNumber } = req.body;
+    console.log('Received register request with:', email, password, role, name, registrationNumber);
 
     // Validate required fields
-    if (!username || !password || !role || !email || !registrationNumber) {
-        console.log('Missing username, password, role, email, or registrationNumber in request body');
-        return res.status(400).json({ message: 'Username, password, role, email, and registration number are required' });
+    if (!email || !password || !role || !name || !registrationNumber) {
+        console.log('Missing email, password, role, email, or registrationNumber in request body');
+        return res.status(400).json({ message: 'email, password, role, email, and registration number are required' });
     }
 
     // Read data from users.json
@@ -29,15 +29,15 @@ router.post('/', (req, res) => {
             return res.status(500).json({ message: 'Internal server error' });
         }
 
-        // Check if username or email already exists
-        const existingUser = users.find(user => user.username === username || user.email === email);
+        // Check if email or email already exists
+        const existingUser = users.find(user => user.email === email);
         if (existingUser) {
-            console.log('Username or email already exists:', username, email);
-            return res.status(409).json({ message: 'Username or email already exists' });
+            console.log('email exists:', email);
+            return res.status(409).json({ message: 'email already exists' });
         }
 
         // Add new user to array
-        const newUser = { username, password, role, email, registrationNumber };
+        const newUser = { email, password, role, name, registrationNumber };
         users.push(newUser);
 
         // Write updated data back to users.json
@@ -46,7 +46,7 @@ router.post('/', (req, res) => {
                 console.error('Error writing to users.json:', writeErr);
                 return res.status(500).json({ message: 'Internal server error' });
             }
-            console.log('User registered successfully:', username);
+            console.log('User registered successfully:', email);
             res.status(201).json({ message: 'User registered successfully' });
         });
     });

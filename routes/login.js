@@ -5,12 +5,12 @@ const router = express.Router();
 
 // POST /login
 router.post('/', (req, res) => {
-    const { username, password } = req.body;
-    console.log('Received login request with:', username, password);
+    const { email, password } = req.body;
+    console.log('Received login request with:', email, password);
 
-    if (!username || !password) {
-        console.log('Missing username or password in request body');
-        return res.status(400).json({ message: 'Username and password are required' });
+    if (!email || !password) {
+        console.log('Missing email or password in request body');
+        return res.status(400).json({ message: 'email and password are required' });
     }
 
     // Read data from users.json
@@ -28,20 +28,20 @@ router.post('/', (req, res) => {
             return res.status(500).json({ message: 'Internal server error' });
         }
 
-        // Find user by username and password
-        const user = users.find(user => user.username === username && user.password === password);
+        // Find user by email and password
+        const user = users.find(user => user.email === email && user.password === password);
         if (!user) {
-            console.log('Invalid credentials for:', username);
+            console.log('Invalid credentials for:', email);
             return res.status(401).json({ message: 'Invalid credentials' });
         }
 
         // Determine welcome message based on role
-        let welcomeMessage = `Welcome ${user.username}`;
+        let welcomeMessage = `Welcome ${user.email}`;
         if (user.role === 'admin') {
-            welcomeMessage = `Welcome admin ${user.username}`;
+            welcomeMessage = `Welcome admin ${user.email}`;
         }
 
-        console.log('Login successful for:', username);
+        console.log('Login successful for:', email);
         res.status(200).json({ message: welcomeMessage, role: user.role });
     });
 });
