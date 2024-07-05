@@ -9,8 +9,8 @@ const jobsRoute = require('./routes/jobs');
 const getJobsRoute = require('./routes/getJobs');
 const allowCors = require('./allowCors'); // Adjust the path if necessary
 const applyRoute = require('./routes/apply'); 
-
-
+const addBlogRoute = require('./routes/addBlog')
+const getBlogsRouter = require('./routes/getBlogs');
 
 const app = express();
 const port = process.env.PORT || 3001;
@@ -28,6 +28,8 @@ app.use('/getUser', getUserRoute);
 app.use('/addJob', jobsRoute);
 app.use('/getJobs', getJobsRoute);
 app.use('/jobs/apply', applyRoute);
+app.use('/addBlog', addBlogRoute);
+app.use('/getBlogs', getBlogsRouter);
 
 
 /* MONGOOSE SETUP */
