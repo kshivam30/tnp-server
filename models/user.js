@@ -6,6 +6,12 @@ const userSchema = new mongoose.Schema({
     password: { type: String, required: true },
     role: { type: String, required: true },
     registrationNumber: { type: String, required: true },
+    AppliedIn: [
+        {
+            company: { type: String, required: true },
+            applied: { type: Boolean, default: true }
+        }
+    ]
     // Add other fields as needed
 });
 

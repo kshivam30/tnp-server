@@ -7,6 +7,9 @@ const loginRoute = require('./routes/login');
 const jobsRoute = require('./routes/jobs');
 const getJobsRoute = require('./routes/getJobs');
 const allowCors = require('./allowCors'); // Adjust the path if necessary
+const applyRoute = require('./routes/apply'); 
+
+
 
 const app = express();
 const port = process.env.PORT || 3001;
@@ -22,6 +25,8 @@ app.use('/register', registerRoute);
 app.use('/login', loginRoute);
 app.use('/addJob', jobsRoute);
 app.use('/getJobs', getJobsRoute);
+app.use('/jobs/apply', applyRoute);
+
 
 /* MONGOOSE SETUP */
 const uri = process.env.MONGO_URL;
