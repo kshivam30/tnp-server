@@ -7,10 +7,7 @@ const userSchema = new mongoose.Schema({
     role: { type: String, required: true },
     registrationNumber: { type: String, required: true },
     AppliedIn: [
-        {
-            company: { type: String, required: true },
-            applied: { type: Boolean, default: true }
-        }
+        { companyName: { type: String, required: true } }
     ]
     // Add other fields as needed
 });
