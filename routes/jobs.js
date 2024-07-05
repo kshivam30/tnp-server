@@ -4,11 +4,11 @@ const Job = require('../models/jobs');
 
 // POST /jobs
 router.post('/', async (req, res) => {
-    const { companyName, CTC, DOA, eligibleAbove, Applied, logo, jobTitle, jobType } = req.body;
-    console.log('Received job post request with:', companyName, CTC, DOA, eligibleAbove, Applied, logo, jobTitle, jobType);
+    const { companyName, CTC, DOA, eligibleAbove, logo, jobTitle, jobType } = req.body;
+    console.log('Received job post request with:', companyName, CTC, DOA, eligibleAbove, logo, jobTitle, jobType);
 
     // Validate required fields
-    if (!companyName || !CTC || !DOA || !eligibleAbove || !Applied || !logo || !jobTitle || !jobType) {
+    if (!companyName || !CTC || !DOA || !eligibleAbove || !logo || !jobTitle || !jobType) {
         console.log('Missing required fields in request body');
         return res.status(400).json({ message: 'All fields are required' });
     }
@@ -20,7 +20,6 @@ router.post('/', async (req, res) => {
             CTC,
             DOA,
             eligibleAbove,
-            Applied,
             logo,
             jobTitle,
             jobType
