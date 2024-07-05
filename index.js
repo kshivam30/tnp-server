@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const cors = require('cors'); // Import the cors package
 const registerRoute = require('./routes/register');
 const loginRoute = require('./routes/login');
+const getUserRoute = require('./routes/getUser')
 const jobsRoute = require('./routes/jobs');
 const getJobsRoute = require('./routes/getJobs');
 const allowCors = require('./allowCors'); // Adjust the path if necessary
@@ -23,6 +24,7 @@ app.use(bodyParser.json()); // Parse JSON bodies
 // Routes
 app.use('/register', registerRoute);
 app.use('/login', loginRoute);
+app.use('/getUser', getUserRoute);
 app.use('/addJob', jobsRoute);
 app.use('/getJobs', getJobsRoute);
 app.use('/jobs/apply', applyRoute);
