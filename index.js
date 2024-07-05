@@ -6,6 +6,7 @@ const registerRoute = require('./routes/register');
 const loginRoute = require('./routes/login');
 const getUserRoute = require('./routes/getUser')
 const jobsRoute = require('./routes/jobs');
+const removeJobRoute = require ('./routes/removeJob')
 const getJobsRoute = require('./routes/getJobs');
 const allowCors = require('./allowCors'); // Adjust the path if necessary
 const applyRoute = require('./routes/apply'); 
@@ -26,6 +27,7 @@ app.use('/register', registerRoute);
 app.use('/login', loginRoute);
 app.use('/getUser', getUserRoute);
 app.use('/addJob', jobsRoute);
+app.use('/removeJob', removeJobRoute);
 app.use('/getJobs', getJobsRoute);
 app.use('/jobs/apply', applyRoute);
 app.use('/addBlog', addBlogRoute);
@@ -34,7 +36,6 @@ app.use('/getBlogs', getBlogsRouter);
 
 /* MONGOOSE SETUP */
 const uri = process.env.MONGO_URL;
-console.log('MongoDB URI:', uri); // Debugging line
 mongoose
   .connect(uri)
   .then(() => {

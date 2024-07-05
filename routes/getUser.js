@@ -20,8 +20,6 @@ router.post('/', async (req, res) => {
             console.log('Invalid search for:', email);
             return res.status(401).json({ message: 'Invalid user' });
         }
-
-        console.log('Sending user ', email);
         res.status(200).json({ user: user });
     } catch (error) {
         console.error('Error during login process:', error);
