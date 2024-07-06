@@ -8,8 +8,14 @@ const userSchema = new mongoose.Schema({
     registrationNumber: { type: String, required: true },
     AppliedIn: [
         { companyName: { type: String, required: true } }
-    ]
-    // Add other fields as needed
+    ],
+    avatarUrl: { type: String },
+    semester: { type: String },
+    cgpa: { type: String },
+    resume: { type: String },
+    tenthMarks: { type: String },
+    twelfthMarks: { type: String },
+    branch: { type: String }
 });
 
 module.exports = mongoose.model('User', userSchema);
