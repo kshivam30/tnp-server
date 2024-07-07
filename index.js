@@ -37,8 +37,6 @@ app.use('/addBlog', addBlogRoute);
 app.use('/getBlogs', getBlogsRouter);
 app.use('/announcements', announcementsRoute);
 
-
-
 /* MONGOOSE SETUP */
 const uri = process.env.MONGO_URL;
 mongoose

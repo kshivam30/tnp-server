@@ -6,6 +6,8 @@ const router = express.Router();
 const Job = require('../models/jobs'); 
 const User = require('../models/user');
 const nodemailer = require('nodemailer');
+const validator = require('validator');
+
 
 const transporter = nodemailer.createTransport({
   service: 'gmail',
@@ -15,24 +17,38 @@ const transporter = nodemailer.createTransport({
   }
 });
 
+
 const sendNotificationToAllUsers = async (job) => {
   try {
     const users = await User.find();
+    if (!users.length) {
+      console.log('No users found in the database.');
+      return;
+    }
+
     const emailPromises = users.map(user => {
-      const mailOptions = {
-        from: EMAIL_USER,
-        to: user.email,
-        subject: `New Job Posted: ${job.jobTitle} at ${job.companyName}`,
-        text: `A new job has been posted:\n\nCompany: ${job.companyName}\nTitle: ${job.jobTitle}\nCTC: ${job.CTC}\nDate of Application: ${job.DOA}\nEligible Above: ${job.eligibleAbove}\n\nCheck out more details on our platform.`,
-      };
-      return transporter.sendMail(mailOptions);
+      if (validator.isEmail(user.email)) {
+        console.log(`Sending email to: ${user.email}`);
+        const mailOptions = {
+          from: process.env.EMAIL_USER,
+          to: user.email,
+          subject: `New Job Posted: ${job.jobTitle} at ${job.companyName}`,
+          text: `A new job has been posted:\n\nCompany: ${job.companyName}\nTitle: ${job.jobTitle}\nCTC: ${job.CTC}\nDate of Application: ${job.DOA}\nEligible Above: ${job.eligibleAbove}\n\nCheck out more details on our platform.`,
+        };
+        return transporter.sendMail(mailOptions);
+      } else {
+        console.log(`Invalid email address: ${user.email}`);
+        return Promise.resolve();
+      }
     });
 
     await Promise.all(emailPromises);
+    console.log('Emails sent successfully.');
   } catch (error) {
     console.error('Error sending notifications:', error);
   }
 };
+
 
 // POST /jobs
 router.post('/', async (req, res) => {
